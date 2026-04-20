@@ -512,7 +512,7 @@ footer{background:var(--ink);color:rgba(246,242,234,0.6);padding:40px 0;border-t
       <div class="trust-row">
         <span class="trust-item">14 jours d'essai</span>
         <span class="trust-item">Sans carte bancaire</span>
-        <span class="trust-item">Hébergement France</span>
+        <span class="trust-item">Conformité RGPD</span>
       </div>
     </div>
 
@@ -706,19 +706,19 @@ footer{background:var(--ink);color:rgba(246,242,234,0.6);padding:40px 0;border-t
   <div class="container">
     <div class="metrics-grid">
       <div class="metric">
-        <div class="metric-value"><em>40h</em> → 6h</div>
-        <div class="metric-label">Temps de rédaction par réponse</div>
+        <div class="metric-value"><em>Gagner</em><br/>du temps</div>
+        <div class="metric-label">Une première version de mémoire en moins d'une heure au lieu de plusieurs jours</div>
       </div>
       <div class="metric">
-        <div class="metric-value"><em>×3</em></div>
-        <div class="metric-label">Dossiers traités par avant-vente et par mois</div>
+        <div class="metric-value"><em>Traiter</em><br/>plus d'AO</div>
+        <div class="metric-label">Votre équipe avant-vente se concentre sur la valeur ajoutée, pas sur la mise en page</div>
       </div>
       <div class="metric">
-        <div class="metric-value"><em>+18</em> pts</div>
-        <div class="metric-label">Gain moyen observé sur la note valeur technique</div>
+        <div class="metric-value"><em>Sécuriser</em><br/>la décision</div>
+        <div class="metric-label">Chaque lot analysé en régie et en forfait, pour choisir votre stratégie d'engagement</div>
       </div>
     </div>
-    <p class="metrics-note">Données estimées sur les scénarios d'usage type ESN · À confirmer avec vos propres AO en essai gratuit</p>
+    <p class="metrics-note">Les gains observés varient selon votre organisation et vos marchés · À valider sur vos propres AO en essai gratuit</p>
   </div>
 </section>
 
@@ -786,12 +786,16 @@ footer{background:var(--ink);color:rgba(246,242,234,0.6);padding:40px 0;border-t
       <div>
         <div class="section-eyebrow">Questions fréquentes</div>
         <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem)">Ce que demandent toutes les ESN avant d'essayer.</h2>
-        <p style="color:var(--muted);margin-top:20px;max-width:320px">Une question qui n'est pas là ? Écrivez à <a href="mailto:contact@aoscore.fr" style="color:var(--ink);text-decoration:underline">contact@aoscore.fr</a>.</p>
+        <p style="color:var(--muted);margin-top:20px;max-width:320px">Une question qui n'est pas là ?</p>
+        <p style="margin-top:12px;max-width:320px">
+          <a href="mailto:contact@aoscore.fr" style="color:var(--accent-deep);font-weight:500;font-size:1.05rem;text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:2px">contact@aoscore.fr</a>
+        </p>
+        <p style="color:var(--muted);margin-top:10px;font-size:0.88rem;max-width:320px">Réponse sous 24h ouvrées.</p>
       </div>
       <div class="faq-list">
         <details class="q">
           <summary>Où sont hébergées les données de nos DCE ?</summary>
-          <p>Les documents que vous déposez sont hébergés en France sur une infrastructure conforme RGPD. Aucun DCE n'est utilisé pour entraîner un modèle. Sur la formule Entreprise, nous proposons un hébergement dédié avec réversibilité contractuelle.</p>
+          <p>Les documents que vous déposez sont stockés sur une infrastructure européenne conforme RGPD (région Frankfurt). Le traitement d'analyse s'appuie sur l'API OpenAI (GPT-4), dont les conditions contractuelles excluent la réutilisation des données API pour l'entraînement des modèles. Vos DCE restent votre propriété exclusive et ne sont ni partagés avec des tiers, ni revendus.</p>
         </details>
         <details class="q">
           <summary>Qu'est-ce qui différencie AOScore de ChatGPT ou Claude directement ?</summary>
@@ -834,8 +838,8 @@ footer{background:var(--ink);color:rgba(246,242,234,0.6);padding:40px 0;border-t
     </a>
     <div class="final-meta">
       <span>◦ 14 jours d'essai offert</span>
-      <span>◦ Aucun DCE utilisé pour l'entraînement</span>
-      <span>◦ Données hébergées en France</span>
+      <span>◦ Données non réutilisées pour l'entraînement IA</span>
+      <span>◦ Conformité RGPD</span>
     </div>
   </div>
 </section>
@@ -845,16 +849,56 @@ footer{background:var(--ink);color:rgba(246,242,234,0.6);padding:40px 0;border-t
   <div class="container footer-inner">
     <div>
       <strong style="font-family:'Instrument Serif',serif;font-size:1.1rem;color:var(--paper)">AOScore</strong>
-      <span style="margin-left:12px">© 2026 SD TECH · SIREN 981 288 285</span>
+      <span style="margin-left:12px">© 2026 · Une solution française pour les ESN</span>
     </div>
     <div>
-      <a href="#">Mentions légales</a>
-      <a href="#">Confidentialité</a>
-      <a href="#">CGU</a>
-      <a href="mailto:contact@aoscore.fr">contact@aoscore.fr</a>
+      <a href="#" onclick="document.getElementById('legal-modal').style.display='flex';return false;">Mentions légales</a>
+      <a href="#" onclick="document.getElementById('legal-modal').style.display='flex';return false;">Confidentialité</a>
+      <a href="mailto:contact@aoscore.fr"><strong>contact@aoscore.fr</strong></a>
     </div>
   </div>
 </footer>
+
+<!-- LEGAL MODAL -->
+<div id="legal-modal" style="display:none;position:fixed;inset:0;background:rgba(11,18,32,0.85);z-index:1000;align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--paper);max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:48px 40px;position:relative;">
+    <button onclick="document.getElementById('legal-modal').style.display='none'" style="position:absolute;top:16px;right:20px;background:none;border:none;font-size:1.8rem;cursor:pointer;color:var(--muted);line-height:1">×</button>
+    <h2 style="font-family:'Instrument Serif',serif;font-size:2rem;margin-bottom:8px">Mentions légales &amp; confidentialité</h2>
+    <p style="color:var(--muted);font-size:0.88rem;margin-bottom:32px">Dernière mise à jour : avril 2026</p>
+
+    <h3 style="font-family:'Instrument Serif',serif;font-size:1.3rem;margin-bottom:12px;margin-top:24px">Éditeur du service</h3>
+    <p style="font-size:0.95rem;line-height:1.6;color:var(--ink-soft);margin-bottom:8px">
+      AOScore est édité par <strong>SD TECH</strong>, SASU au capital de 1 000 €.
+    </p>
+    <p style="font-size:0.92rem;line-height:1.6;color:var(--muted);margin-bottom:8px">
+      SIREN : 981 288 285 · RCS Versailles<br/>
+      Siège social : Trappes (78), France<br/>
+      Directeur de publication : Younes, président de SD TECH<br/>
+      Contact : <a href="mailto:contact@aoscore.fr" style="color:var(--accent-deep)">contact@aoscore.fr</a>
+    </p>
+
+    <h3 style="font-family:'Instrument Serif',serif;font-size:1.3rem;margin-bottom:12px;margin-top:28px">Hébergement</h3>
+    <p style="font-size:0.92rem;line-height:1.6;color:var(--muted)">
+      Site web hébergé par Render Services Inc., San Francisco, USA. Données applicatives AOScore hébergées en région Europe (Frankfurt).
+    </p>
+
+    <h3 style="font-family:'Instrument Serif',serif;font-size:1.3rem;margin-bottom:12px;margin-top:28px">Protection des données</h3>
+    <p style="font-size:0.92rem;line-height:1.6;color:var(--muted);margin-bottom:10px">
+      AOScore traite les données de ses utilisateurs dans le respect du RGPD. Les documents (DCE, réponses) déposés dans l'application restent la propriété exclusive du client et ne sont ni partagés avec des tiers, ni utilisés à d'autres fins que la fourniture du service.
+    </p>
+    <p style="font-size:0.92rem;line-height:1.6;color:var(--muted);margin-bottom:10px">
+      Le traitement d'analyse automatique s'appuie sur l'API OpenAI (GPT-4), dont les conditions contractuelles excluent la réutilisation des données API pour l'entraînement des modèles.
+    </p>
+    <p style="font-size:0.92rem;line-height:1.6;color:var(--muted)">
+      Pour toute demande d'accès, rectification ou suppression de vos données personnelles : <a href="mailto:contact@aoscore.fr" style="color:var(--accent-deep)">contact@aoscore.fr</a>.
+    </p>
+
+    <h3 style="font-family:'Instrument Serif',serif;font-size:1.3rem;margin-bottom:12px;margin-top:28px">Propriété intellectuelle</h3>
+    <p style="font-size:0.92rem;line-height:1.6;color:var(--muted)">
+      L'ensemble des contenus, textes, logos et éléments graphiques présents sur ce site sont la propriété de SD TECH. Toute reproduction sans autorisation écrite est interdite.
+    </p>
+  </div>
+</div>
 
 <script>
 // Reveal on scroll

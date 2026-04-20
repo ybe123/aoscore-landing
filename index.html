@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AOScore — Répondez à 3× plus d'appels d'offres publics, sans agrandir votre équipe</title>
+<meta name="description" content="AOScore analyse vos DCE, score les lots régie vs forfait, et génère un mémoire technique Word prêt à déposer. Conçu pour les ESN qui répondent aux marchés publics." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1220;
+  --ink-soft:#1a2236;
+  --paper:#F6F2EA;
+  --paper-warm:#EFE8DB;
+  --rule:#1a2236;
+  --accent:#C8924A;
+  --accent-deep:#A06F2E;
+  --muted:#5A6375;
+  --success:#2F6B4A;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Geist',system-ui,-apple-system,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  font-weight:400;
+  line-height:1.55;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+.serif{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-0.01em}
+.mono{font-family:'Geist Mono',monospace;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase}
+
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+@media(max-width:720px){.container{padding:0 20px}}
+
+/* ───────────── NAV ───────────── */
+nav{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(12px);
+  background:rgba(246,242,234,0.85);
+  border-bottom:1px solid rgba(11,18,32,0.08);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 32px;max-width:1240px;margin:0 auto;
+}
+.logo{
+  display:flex;align-items:baseline;gap:8px;text-decoration:none;color:var(--ink);
+}
+.logo-mark{
+  font-family:'Instrument Serif',serif;font-size:1.7rem;letter-spacing:-0.02em;
+}
+.logo-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--accent);
+  display:inline-block;margin-bottom:3px;
+}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{
+  color:var(--ink);text-decoration:none;font-size:0.92rem;font-weight:400;
+  transition:color .2s ease;
+}
+.nav-links a:hover{color:var(--accent-deep)}
+.nav-cta{
+  padding:10px 20px;background:var(--ink);color:var(--paper);
+  border-radius:2px;text-decoration:none;font-size:0.88rem;font-weight:500;
+  transition:background .2s ease;
+}
+.nav-cta:hover{background:var(--accent-deep);color:var(--paper)}
+@media(max-width:720px){.nav-links{display:none}.nav-cta{padding:8px 16px;font-size:0.82rem}}
+
+/* ───────────── HERO ───────────── */
+.hero{
+  padding:80px 0 100px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:0;right:-10%;width:60%;height:100%;
+  background:radial-gradient(circle at 30% 40%, rgba(200,146,74,0.12), transparent 60%);
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 0.8fr;gap:80px;align-items:start;
+  position:relative;z-index:2;
+}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:48px}}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 14px;border:1px solid var(--rule);border-radius:100px;
+  margin-bottom:28px;background:rgba(255,255,255,0.4);
+}
+.eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--success);
+  box-shadow:0 0 0 3px rgba(47,107,74,0.15);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(47,107,74,0.05)}}
+
+h1.hero-title{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(2.8rem,6vw,5rem);
+  line-height:1.02;
+  letter-spacing:-0.025em;
+  margin-bottom:28px;
+}
+h1 em{
+  font-style:italic;color:var(--accent-deep);
+  position:relative;
+}
+h1 em::after{
+  content:'';position:absolute;left:0;right:0;bottom:0.08em;height:0.12em;
+  background:var(--accent);opacity:0.3;
+}
+
+.hero-lede{
+  font-size:1.18rem;color:var(--muted);max-width:520px;margin-bottom:40px;line-height:1.55;
+}
+
+.cta-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:48px}
+.btn-primary{
+  padding:16px 28px;background:var(--ink);color:var(--paper);
+  text-decoration:none;border-radius:2px;font-size:0.95rem;font-weight:500;
+  display:inline-flex;align-items:center;gap:10px;
+  transition:transform .15s ease,background .2s ease;
+  border:none;cursor:pointer;
+}
+.btn-primary:hover{background:var(--accent-deep);transform:translateY(-1px)}
+.btn-primary svg{transition:transform .2s ease}
+.btn-primary:hover svg{transform:translateX(3px)}
+.btn-secondary{
+  padding:16px 0;color:var(--ink);text-decoration:none;
+  font-size:0.95rem;font-weight:500;
+  border-bottom:1px solid var(--ink);
+  transition:color .2s ease,border-color .2s ease;
+}
+.btn-secondary:hover{color:var(--accent-deep);border-color:var(--accent-deep)}
+
+.trust-row{
+  display:flex;gap:32px;align-items:center;flex-wrap:wrap;
+  padding-top:32px;border-top:1px solid rgba(11,18,32,0.1);
+}
+.trust-item{font-size:0.82rem;color:var(--muted);display:flex;align-items:center;gap:8px}
+.trust-item::before{content:'';width:4px;height:4px;background:var(--accent);border-radius:50%}
+
+/* Hero card (right side) */
+.hero-card{
+  background:#fff;
+  border:1px solid rgba(11,18,32,0.1);
+  padding:0;position:relative;
+  box-shadow:0 30px 60px -20px rgba(11,18,32,0.15),0 0 0 1px rgba(11,18,32,0.02);
+  transform:rotate(-0.8deg);
+  transition:transform .4s cubic-bezier(0.2,0.8,0.2,1);
+}
+.hero-card:hover{transform:rotate(0deg) translateY(-4px)}
+.hero-card-header{
+  padding:14px 20px;border-bottom:1px solid rgba(11,18,32,0.08);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--paper-warm);
+}
+.hero-card-header .mono{color:var(--muted);font-size:0.7rem}
+.hero-card-body{padding:28px 24px}
+
+.card-label{font-size:0.72rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px}
+.card-title-ao{font-family:'Instrument Serif',serif;font-size:1.45rem;line-height:1.2;margin-bottom:4px}
+.card-sub-ao{font-size:0.85rem;color:var(--muted);margin-bottom:24px}
+
+.score-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;
+}
+.score-box{
+  padding:14px 16px;border:1px solid rgba(11,18,32,0.1);
+  position:relative;
+}
+.score-box.selected{
+  border-color:var(--accent-deep);
+  background:rgba(200,146,74,0.06);
+}
+.score-box.selected::after{
+  content:'★';position:absolute;top:8px;right:10px;color:var(--accent-deep);font-size:0.8rem;
+}
+.score-type{font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.score-value{font-family:'Instrument Serif',serif;font-size:2.2rem;line-height:1;margin-bottom:2px}
+.score-unit{font-size:0.72rem;color:var(--muted)}
+
+.card-footer-row{
+  padding-top:18px;border-top:1px dashed rgba(11,18,32,0.15);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.card-doc{font-size:0.82rem;color:var(--ink);display:flex;align-items:center;gap:8px}
+.card-doc svg{color:var(--accent-deep)}
+.card-check{
+  width:22px;height:22px;border-radius:50%;background:var(--success);
+  color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;
+}
+
+/* Decorative number */
+.hero-number{
+  position:absolute;top:20px;right:-30px;
+  font-family:'Instrument Serif',serif;
+  font-size:8rem;color:var(--accent);opacity:0.08;
+  line-height:1;pointer-events:none;
+  font-style:italic;
+}
+
+/* ───────────── LOGOS / SOCIAL PROOF STUB ───────────── */
+.logos-strip{
+  padding:40px 0;border-top:1px solid rgba(11,18,32,0.1);
+  border-bottom:1px solid rgba(11,18,32,0.1);
+  background:var(--paper-warm);
+}
+.logos-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+.logos-label{font-size:0.78rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.logos-fake{display:flex;gap:40px;flex-wrap:wrap;align-items:center}
+.fake-logo{
+  font-family:'Instrument Serif',serif;font-size:1.2rem;color:var(--ink-soft);opacity:0.5;
+  letter-spacing:-0.01em;
+}
+
+/* ───────────── PROBLEM SECTION ───────────── */
+.section{padding:120px 0}
+.section-header{margin-bottom:64px;max-width:720px}
+.section-eyebrow{font-family:'Geist Mono',monospace;font-size:0.78rem;color:var(--accent-deep);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.section-eyebrow::before{content:'';width:30px;height:1px;background:var(--accent)}
+h2{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(2rem,4.5vw,3.4rem);line-height:1.05;letter-spacing:-0.02em;
+  margin-bottom:20px;
+}
+
+.problem{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+.problem::before{
+  content:'';position:absolute;top:-20%;right:-10%;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(200,146,74,0.15),transparent 60%);
+  pointer-events:none;
+}
+.problem h2{color:var(--paper)}
+.problem .section-eyebrow{color:var(--accent)}
+.problem .section-eyebrow::before{background:var(--accent)}
+
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:40px}
+@media(max-width:900px){.problem-grid{grid-template-columns:1fr}}
+
+.problem-item{
+  padding:32px 0;
+  border-top:1px solid rgba(246,242,234,0.15);
+  position:relative;
+}
+.problem-num{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:3rem;color:var(--accent);line-height:1;margin-bottom:20px;
+}
+.problem-title{
+  font-family:'Instrument Serif',serif;font-size:1.5rem;line-height:1.2;margin-bottom:12px;
+}
+.problem-text{color:rgba(246,242,234,0.75);font-size:0.95rem;line-height:1.6}
+
+/* ───────────── HOW IT WORKS ───────────── */
+.steps-wrap{position:relative}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;position:relative}
+@media(max-width:900px){.steps{grid-template-columns:1fr}}
+
+.step{
+  padding:40px 32px;
+  border:1px solid rgba(11,18,32,0.1);
+  background:#fff;
+  position:relative;
+}
+.step:not(:last-child){border-right:none}
+@media(max-width:900px){.step:not(:last-child){border-right:1px solid rgba(11,18,32,0.1);border-bottom:none}.step:last-child{border-top:none}.step:not(:first-child){border-top:none}}
+
+.step-num{
+  position:absolute;top:20px;right:24px;
+  font-family:'Geist Mono',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;
+}
+.step-icon{
+  width:44px;height:44px;border:1px solid var(--ink);border-radius:2px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:28px;
+  background:var(--paper);color:var(--ink);
+}
+.step-title{font-family:'Instrument Serif',serif;font-size:1.6rem;line-height:1.15;margin-bottom:12px}
+.step-text{color:var(--muted);font-size:0.95rem;line-height:1.6}
+
+/* ───────────── DIFFERENTIATORS ───────────── */
+.diff{background:var(--paper-warm)}
+.diff-grid{
+  display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:start;
+}
+@media(max-width:900px){.diff-grid{grid-template-columns:1fr;gap:40px}}
+
+.diff-list{display:flex;flex-direction:column;gap:0}
+.diff-item{
+  padding:32px 0;border-top:1px solid rgba(11,18,32,0.15);
+  cursor:pointer;transition:padding-left .3s ease;
+}
+.diff-item:hover{padding-left:12px}
+.diff-item:last-child{border-bottom:1px solid rgba(11,18,32,0.15)}
+.diff-item-head{display:flex;align-items:baseline;gap:20px;margin-bottom:10px}
+.diff-num{font-family:'Geist Mono',monospace;font-size:0.82rem;color:var(--accent-deep)}
+.diff-title{font-family:'Instrument Serif',serif;font-size:1.7rem;line-height:1.2;letter-spacing:-0.01em}
+.diff-text{color:var(--muted);font-size:0.98rem;line-height:1.6;max-width:560px}
+
+/* Mockup aside */
+.diff-aside{
+  position:sticky;top:100px;
+  background:#fff;border:1px solid rgba(11,18,32,0.1);
+  padding:0;
+  box-shadow:0 20px 50px -15px rgba(11,18,32,0.15);
+}
+.aside-header{
+  padding:14px 18px;border-bottom:1px solid rgba(11,18,32,0.08);
+  display:flex;align-items:center;gap:10px;background:var(--paper-warm);
+}
+.dot-r{width:9px;height:9px;border-radius:50%}
+.dot-r.a{background:#E76E50}.dot-r.b{background:#F4B942}.dot-r.c{background:#6BA368}
+.aside-title{font-family:'Geist Mono',monospace;font-size:0.72rem;color:var(--muted);margin-left:auto}
+
+.aside-body{padding:24px}
+.aside-caption{font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.aside-section{margin-bottom:22px}
+.aside-h{font-family:'Instrument Serif',serif;font-size:1.15rem;margin-bottom:10px}
+.aside-line{
+  height:6px;background:rgba(11,18,32,0.08);border-radius:2px;margin-bottom:8px;
+}
+.aside-line.short{width:70%}
+.aside-line.med{width:85%}
+.aside-highlight{
+  padding:10px 12px;background:rgba(200,146,74,0.12);border-left:2px solid var(--accent);
+  font-size:0.82rem;color:var(--ink-soft);margin-top:12px;
+}
+.aside-table{
+  display:grid;grid-template-columns:1fr auto;gap:8px 14px;font-size:0.82rem;
+}
+.aside-table-label{color:var(--muted)}
+.aside-table-value{font-family:'Geist Mono',monospace;color:var(--ink);font-weight:500}
+
+/* ───────────── METRIC BAND ───────────── */
+.metrics{
+  padding:80px 0;background:var(--ink);color:var(--paper);
+  border-top:1px solid rgba(200,146,74,0.3);
+  border-bottom:1px solid rgba(200,146,74,0.3);
+}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+@media(max-width:720px){.metrics-grid{grid-template-columns:1fr;gap:32px}}
+.metric{text-align:left;padding:0 12px;border-left:2px solid var(--accent)}
+.metric-value{font-family:'Instrument Serif',serif;font-size:clamp(3rem,6vw,4.5rem);line-height:1;color:var(--paper);letter-spacing:-0.02em}
+.metric-value em{font-style:italic;color:var(--accent)}
+.metric-label{font-size:0.92rem;color:rgba(246,242,234,0.7);margin-top:10px;max-width:260px;line-height:1.45}
+.metrics-note{
+  text-align:center;margin-top:40px;font-size:0.78rem;color:rgba(246,242,234,0.5);
+  font-family:'Geist Mono',monospace;letter-spacing:0.05em;
+}
+
+/* ───────────── PRICING ───────────── */
+.pricing{background:var(--paper)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+@media(max-width:900px){.pricing-grid{grid-template-columns:1fr}}
+
+.plan{
+  background:#fff;border:1px solid rgba(11,18,32,0.1);padding:40px 32px;
+  display:flex;flex-direction:column;position:relative;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.plan:hover{transform:translateY(-4px);box-shadow:0 20px 40px -15px rgba(11,18,32,0.12)}
+.plan.featured{
+  background:var(--ink);color:var(--paper);border-color:var(--ink);
+}
+.plan.featured .plan-price,.plan.featured .plan-name{color:var(--paper)}
+.plan-tag{
+  position:absolute;top:-12px;left:32px;
+  padding:4px 12px;background:var(--accent);color:var(--ink);
+  font-family:'Geist Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+}
+.plan-name{font-family:'Instrument Serif',serif;font-size:1.6rem;margin-bottom:8px}
+.plan-desc{font-size:0.88rem;color:var(--muted);margin-bottom:28px;min-height:42px}
+.plan.featured .plan-desc{color:rgba(246,242,234,0.7)}
+.plan-price{font-family:'Instrument Serif',serif;font-size:2.2rem;margin-bottom:4px}
+.plan-price-note{font-size:0.82rem;color:var(--muted);margin-bottom:28px}
+.plan.featured .plan-price-note{color:rgba(246,242,234,0.6)}
+
+.plan-features{list-style:none;margin-bottom:32px;flex:1}
+.plan-features li{
+  padding:10px 0;font-size:0.9rem;border-bottom:1px dashed rgba(11,18,32,0.1);
+  display:flex;align-items:flex-start;gap:10px;
+}
+.plan.featured .plan-features li{border-color:rgba(246,242,234,0.15)}
+.plan-features li::before{
+  content:'→';color:var(--accent-deep);flex-shrink:0;font-weight:500;
+}
+.plan.featured .plan-features li::before{color:var(--accent)}
+
+.plan-cta{
+  display:block;text-align:center;padding:14px;text-decoration:none;
+  border:1px solid var(--ink);color:var(--ink);font-size:0.92rem;font-weight:500;
+  transition:all .2s ease;
+}
+.plan-cta:hover{background:var(--ink);color:var(--paper)}
+.plan.featured .plan-cta{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.plan.featured .plan-cta:hover{background:var(--paper);border-color:var(--paper)}
+
+/* ───────────── FAQ ───────────── */
+.faq{background:var(--paper-warm)}
+.faq-grid{display:grid;grid-template-columns:1fr 2fr;gap:60px}
+@media(max-width:900px){.faq-grid{grid-template-columns:1fr;gap:32px}}
+
+.faq-list{display:flex;flex-direction:column}
+details.q{
+  padding:24px 0;border-top:1px solid rgba(11,18,32,0.15);
+  cursor:pointer;
+}
+details.q:last-of-type{border-bottom:1px solid rgba(11,18,32,0.15)}
+details.q summary{
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;
+  font-family:'Instrument Serif',serif;font-size:1.25rem;line-height:1.3;
+}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::after{
+  content:'+';font-family:'Geist',sans-serif;font-size:1.4rem;color:var(--accent-deep);
+  transition:transform .3s ease;flex-shrink:0;font-weight:300;
+}
+details.q[open] summary::after{transform:rotate(45deg)}
+details.q p{
+  margin-top:14px;color:var(--muted);font-size:0.95rem;line-height:1.65;max-width:680px;
+}
+
+/* ───────────── FINAL CTA ───────────── */
+.final{
+  background:var(--ink);color:var(--paper);
+  padding:140px 0;position:relative;overflow:hidden;
+}
+.final::before{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:900px;height:900px;border:1px solid rgba(200,146,74,0.15);border-radius:50%;
+}
+.final::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;border:1px solid rgba(200,146,74,0.1);border-radius:50%;
+}
+.final-inner{position:relative;z-index:2;text-align:center;max-width:760px;margin:0 auto}
+.final h2{color:var(--paper);margin-bottom:24px}
+.final h2 em{color:var(--accent);font-style:italic}
+.final p{color:rgba(246,242,234,0.75);font-size:1.15rem;margin-bottom:40px;line-height:1.55}
+
+.final .btn-primary{background:var(--accent);color:var(--ink);padding:18px 36px;font-size:1rem}
+.final .btn-primary:hover{background:var(--paper)}
+
+.final-meta{
+  margin-top:48px;padding-top:32px;border-top:1px solid rgba(246,242,234,0.15);
+  display:flex;justify-content:center;gap:32px;flex-wrap:wrap;
+  font-size:0.82rem;color:rgba(246,242,234,0.6);
+}
+.final-meta span{display:flex;align-items:center;gap:8px}
+
+/* ───────────── FOOTER ───────────── */
+footer{background:var(--ink);color:rgba(246,242,234,0.6);padding:40px 0;border-top:1px solid rgba(246,242,234,0.1)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;font-size:0.82rem}
+.footer-inner a{color:rgba(246,242,234,0.6);text-decoration:none;margin:0 12px;transition:color .2s ease}
+.footer-inner a:hover{color:var(--accent)}
+
+/* ───────────── SCROLL ANIMATIONS ───────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">AOScore</span>
+      <span class="logo-dot"></span>
+    </a>
+    <div class="nav-links">
+      <a href="#probleme">Pourquoi AOScore</a>
+      <a href="#fonctionnement">Fonctionnement</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#cta" class="nav-cta">Essai gratuit</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span class="mono">Conçu pour les ESN françaises</span>
+      </span>
+      <h1 class="hero-title">
+        Répondez à <em>3× plus</em> d'appels d'offres publics — sans agrandir votre équipe.
+      </h1>
+      <p class="hero-lede">
+        AOScore lit votre DCE, distingue les lots en régie de ceux au forfait, et produit un mémoire technique Word structuré, prêt à déposer. En une heure au lieu de quarante.
+      </p>
+      <div class="cta-row">
+        <a href="#cta" class="btn-primary">
+          Démarrer l'essai gratuit
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12m0 0L7 1m6 6l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#fonctionnement" class="btn-secondary">Voir comment ça marche</a>
+      </div>
+      <div class="trust-row">
+        <span class="trust-item">14 jours d'essai</span>
+        <span class="trust-item">Sans carte bancaire</span>
+        <span class="trust-item">Hébergement France</span>
+      </div>
+    </div>
+
+    <div style="position:relative">
+      <span class="hero-number">№01</span>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <span class="mono">DCE-2026-0412</span>
+          <span class="mono" style="color:var(--success)">Analysé</span>
+        </div>
+        <div class="hero-card-body">
+          <div class="card-label">Marché public · Ministère</div>
+          <div class="card-title-ao">Prestations d'ingénierie logicielle</div>
+          <div class="card-sub-ao">Lot 2 — Développement &amp; TMA · 2026-2029</div>
+
+          <div class="score-row">
+            <div class="score-box">
+              <div class="score-type">Régie</div>
+              <div class="score-value">64<span style="font-size:1rem;color:var(--muted)">/100</span></div>
+              <div class="score-unit">Score de pertinence</div>
+            </div>
+            <div class="score-box selected">
+              <div class="score-type">Forfait</div>
+              <div class="score-value">87<span style="font-size:1rem;color:var(--muted)">/100</span></div>
+              <div class="score-unit">Recommandé</div>
+            </div>
+          </div>
+
+          <div class="card-footer-row">
+            <span class="card-doc">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h7l3 3v9H3V2z M10 2v3h3" stroke="currentColor" stroke-width="1.3"/></svg>
+              Mémoire technique généré — 42 pages
+            </span>
+            <span class="card-check">✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SOCIAL PROOF PLACEHOLDER -->
+<section class="logos-strip">
+  <div class="container logos-inner">
+    <span class="logos-label">Ils nous font confiance</span>
+    <div class="logos-fake">
+      <span class="fake-logo">— Vos logos ici bientôt —</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section problem" id="probleme">
+  <div class="container reveal">
+    <div class="section-header">
+      <div class="section-eyebrow">Le constat</div>
+      <h2>Répondre à un AO public coûte plus cher que de le perdre.</h2>
+      <p style="color:rgba(246,242,234,0.7);font-size:1.08rem;max-width:640px;margin-top:20px">
+        Une ESN de 30 personnes passe en moyenne 40 à 60 heures par dossier. Avec un taux de succès de 20 %, c'est quatre réponses sur cinq entièrement perdues.
+      </p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-item">
+        <div class="problem-num">i.</div>
+        <div class="problem-title">Trop de temps par dossier</div>
+        <p class="problem-text">Analyse du DCE, rédaction du mémoire technique, chiffrage, constitution du dossier administratif. Votre avant-vente fait tout à la main. Votre meilleure plume n'est disponible que pour deux AO par mois.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">ii.</div>
+        <div class="problem-title">Régie ou forfait, jamais clair</div>
+        <p class="problem-text">Chaque lot impose une lecture fine du CCTP pour décider du mode d'engagement. Une erreur de lecture, et c'est une marge perdue sur trois ans de contrat.</p>
+      </div>
+      <div class="problem-item">
+        <div class="problem-num">iii.</div>
+        <div class="problem-title">ChatGPT ne suffit pas</div>
+        <p class="problem-text">Le texte générique ne passe pas face à un acheteur public aguerri. Vous avez besoin d'un outil qui comprend TJM, ETP, forfait au livrable, références pondérées — votre métier, pas le sien.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="fonctionnement">
+  <div class="container reveal">
+    <div class="section-header">
+      <div class="section-eyebrow">Fonctionnement</div>
+      <h2>De votre DCE au dossier déposé, en trois temps.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01 / 03</span>
+        <div class="step-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 3h8l4 4v10H4V3z M12 3v4h4" stroke="currentColor" stroke-width="1.3"/></svg>
+        </div>
+        <h3 class="step-title">Déposez le DCE</h3>
+        <p class="step-text">Glissez les pièces du marché (RC, CCAP, CCTP, BPU…). AOScore les ingère, extrait les critères, les pondérations, les lots, les délais.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">02 / 03</span>
+        <div class="step-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.3"/><path d="M10 6v4l2.5 2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="step-title">Obtenez le scoring</h3>
+        <p class="step-text">Chaque lot est scoré en régie et en forfait. Vous voyez immédiatement où votre marge est la plus prévisible et quelle stratégie d'engagement adopter.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">03 / 03</span>
+        <div class="step-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 4l7-1 7 1v12l-7 1-7-1V4z M10 3v14" stroke="currentColor" stroke-width="1.3"/></svg>
+        </div>
+        <h3 class="step-title">Exportez le mémoire Word</h3>
+        <p class="step-text">Un document structuré selon la trame attendue — méthodologie, références, CV consultants, planning. Prêt à relire, pas à réécrire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATORS -->
+<section class="section diff">
+  <div class="container reveal">
+    <div class="section-header">
+      <div class="section-eyebrow">Ce qui change</div>
+      <h2>Trois choses qu'aucun outil IA généraliste ne fera pour vous.</h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-list">
+        <div class="diff-item">
+          <div class="diff-item-head">
+            <span class="diff-num">I.</span>
+            <h3 class="diff-title">Scoring régie vs forfait automatique</h3>
+          </div>
+          <p class="diff-text">Chaque lot est analysé sur la nature des livrables, le degré de spécification, le partage du risque, la durée d'engagement. Vous obtenez deux scores chiffrés et une recommandation motivée — pas une opinion, une méthode.</p>
+        </div>
+        <div class="diff-item">
+          <div class="diff-item-head">
+            <span class="diff-num">II.</span>
+            <h3 class="diff-title">Export Word conforme à la trame attendue</h3>
+          </div>
+          <p class="diff-text">Pas un brouillon markdown à remettre en forme. Un .docx structuré selon la table des matières qu'attend l'acheteur public, avec styles, numérotation, tableaux, prêt à intégrer votre charte graphique.</p>
+        </div>
+        <div class="diff-item">
+          <div class="diff-item-head">
+            <span class="diff-num">III.</span>
+            <h3 class="diff-title">Un vocabulaire qui parle ESN</h3>
+          </div>
+          <p class="diff-text">TJM, ETP, forfait au livrable, compétence pondérée, références sectorielles, clause de réversibilité. AOScore connaît votre langue — vous ne passez pas trois heures à le former à chaque AO.</p>
+        </div>
+      </div>
+      <div class="diff-aside">
+        <div class="aside-header">
+          <span class="dot-r a"></span><span class="dot-r b"></span><span class="dot-r c"></span>
+          <span class="aside-title">aoscore.fr/analyse</span>
+        </div>
+        <div class="aside-body">
+          <div class="aside-caption">Analyse — Lot 2</div>
+
+          <div class="aside-section">
+            <div class="aside-h">Recommandation</div>
+            <div class="aside-line med"></div>
+            <div class="aside-line short"></div>
+            <div class="aside-highlight">
+              <strong>Forfait conseillé (87 / 100)</strong><br/>
+              Livrables précisément spécifiés, planning contraint, critère prix pondéré à 40 %.
+            </div>
+          </div>
+
+          <div class="aside-section">
+            <div class="aside-h">Critères principaux</div>
+            <div class="aside-table">
+              <span class="aside-table-label">Prix</span><span class="aside-table-value">40 %</span>
+              <span class="aside-table-label">Valeur technique</span><span class="aside-table-value">45 %</span>
+              <span class="aside-table-label">RSE</span><span class="aside-table-value">15 %</span>
+            </div>
+          </div>
+
+          <div class="aside-section">
+            <div class="aside-h">Livrable généré</div>
+            <div class="aside-line med"></div>
+            <div class="aside-line short"></div>
+            <div class="aside-line"></div>
+            <div style="margin-top:10px;font-size:0.8rem;color:var(--muted)">Mémoire_Technique_Lot2.docx · 42 p.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS BAND -->
+<section class="metrics">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="metric">
+        <div class="metric-value"><em>40h</em> → 6h</div>
+        <div class="metric-label">Temps de rédaction par réponse</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value"><em>×3</em></div>
+        <div class="metric-label">Dossiers traités par avant-vente et par mois</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value"><em>+18</em> pts</div>
+        <div class="metric-label">Gain moyen observé sur la note valeur technique</div>
+      </div>
+    </div>
+    <p class="metrics-note">Données estimées sur les scénarios d'usage type ESN · À confirmer avec vos propres AO en essai gratuit</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing" id="tarifs">
+  <div class="container reveal">
+    <div class="section-header">
+      <div class="section-eyebrow">Tarifs</div>
+      <h2>Trois formules pensées pour votre volume.</h2>
+      <p style="color:var(--muted);font-size:1.05rem;max-width:580px;margin-top:16px">
+        Transparence sur l'usage, tarification sur devis personnalisé selon votre volume d'AO et vos besoins d'intégration.
+      </p>
+    </div>
+    <div class="pricing-grid">
+      <div class="plan">
+        <h3 class="plan-name">Starter</h3>
+        <p class="plan-desc">Pour valider la méthode sur vos premiers dossiers.</p>
+        <div class="plan-price">Sur devis</div>
+        <div class="plan-price-note">Engagement mensuel · 1 utilisateur</div>
+        <ul class="plan-features">
+          <li>Jusqu'à 5 AO analysés / mois</li>
+          <li>Scoring régie vs forfait</li>
+          <li>Export Word structuré</li>
+          <li>Support par email</li>
+        </ul>
+        <a href="#cta" class="plan-cta">Demander un devis</a>
+      </div>
+      <div class="plan featured">
+        <span class="plan-tag">Le plus choisi</span>
+        <h3 class="plan-name">Pro</h3>
+        <p class="plan-desc">Pour les ESN qui font de l'AO un moteur commercial.</p>
+        <div class="plan-price">Sur devis</div>
+        <div class="plan-price-note">Engagement annuel · 3 à 10 utilisateurs</div>
+        <ul class="plan-features">
+          <li>AO illimités</li>
+          <li>Scoring régie vs forfait + critères pondérés</li>
+          <li>Templates Word personnalisables à votre charte</li>
+          <li>Espace équipe &amp; historique des réponses</li>
+          <li>Support prioritaire &amp; onboarding</li>
+        </ul>
+        <a href="#cta" class="plan-cta">Demander un devis</a>
+      </div>
+      <div class="plan">
+        <h3 class="plan-name">Entreprise</h3>
+        <p class="plan-desc">Pour les cellules AO structurées et les grands comptes.</p>
+        <div class="plan-price">Sur devis</div>
+        <div class="plan-price-note">Utilisateurs illimités</div>
+        <ul class="plan-features">
+          <li>Tout Pro</li>
+          <li>SSO &amp; intégrations CRM / Drive</li>
+          <li>Hébergement dédié France</li>
+          <li>Accompagnement métier &amp; formation</li>
+          <li>SLA sur mesure</li>
+        </ul>
+        <a href="#cta" class="plan-cta">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq" id="faq">
+  <div class="container reveal">
+    <div class="faq-grid">
+      <div>
+        <div class="section-eyebrow">Questions fréquentes</div>
+        <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem)">Ce que demandent toutes les ESN avant d'essayer.</h2>
+        <p style="color:var(--muted);margin-top:20px;max-width:320px">Une question qui n'est pas là ? Écrivez à <a href="mailto:contact@aoscore.fr" style="color:var(--ink);text-decoration:underline">contact@aoscore.fr</a>.</p>
+      </div>
+      <div class="faq-list">
+        <details class="q">
+          <summary>Où sont hébergées les données de nos DCE ?</summary>
+          <p>Les documents que vous déposez sont hébergés en France sur une infrastructure conforme RGPD. Aucun DCE n'est utilisé pour entraîner un modèle. Sur la formule Entreprise, nous proposons un hébergement dédié avec réversibilité contractuelle.</p>
+        </details>
+        <details class="q">
+          <summary>Qu'est-ce qui différencie AOScore de ChatGPT ou Claude directement ?</summary>
+          <p>Un modèle généraliste produit du texte. AOScore produit un livrable métier : scoring régie/forfait motivé, mémoire technique Word structuré selon la trame attendue, vocabulaire ESN intégré. L'IA est un composant, pas le produit.</p>
+        </details>
+        <details class="q">
+          <summary>Faut-il une compétence technique pour l'utiliser ?</summary>
+          <p>Non. Si vos équipes savent utiliser Word et déposer un fichier sur Drive, elles sauront utiliser AOScore. L'onboarding type prend 45 minutes.</p>
+        </details>
+        <details class="q">
+          <summary>Le mémoire généré est-il vraiment prêt à déposer ?</summary>
+          <p>Il est prêt à relire. Nous estimons à 80 % la part automatisable ; les 20 % restants sont la relecture, les ajustements de ton, l'ajout des références-clés spécifiques à votre dossier. Vous gagnez la première passe — souvent la plus coûteuse.</p>
+        </details>
+        <details class="q">
+          <summary>AOScore s'intègre-t-il avec nos outils existants ?</summary>
+          <p>Sur les formules Pro et Entreprise, nous proposons des connecteurs CRM (Hubspot, Salesforce), stockage (Drive, SharePoint) et SSO. Les intégrations sur mesure sont étudiées au cas par cas.</p>
+        </details>
+        <details class="q">
+          <summary>Et si on veut arrêter ?</summary>
+          <p>Sans engagement sur la formule Starter. Sur les formules Pro et Entreprise, nous garantissons la restitution intégrale de vos données dans un format exploitable sous 30 jours.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="cta">
+  <div class="container final-inner reveal">
+    <div class="section-eyebrow" style="color:var(--accent);justify-content:center;display:inline-flex">
+      <span style="margin-left:42px">Commencez en 14 jours</span>
+    </div>
+    <h2>Testez AOScore sur <em>votre prochain AO</em>. <br/>Sans carte bancaire.</h2>
+    <p>
+      Déposez un DCE réel, obtenez le scoring et le mémoire Word en moins d'une heure. Décidez ensuite.
+    </p>
+    <a href="https://aoscore.fr" class="btn-primary">
+      Démarrer l'essai gratuit
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12m0 0L7 1m6 6l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </a>
+    <div class="final-meta">
+      <span>◦ 14 jours d'essai offert</span>
+      <span>◦ Aucun DCE utilisé pour l'entraînement</span>
+      <span>◦ Données hébergées en France</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div>
+      <strong style="font-family:'Instrument Serif',serif;font-size:1.1rem;color:var(--paper)">AOScore</strong>
+      <span style="margin-left:12px">© 2026 SD TECH · SIREN 981 288 285</span>
+    </div>
+    <div>
+      <a href="#">Mentions légales</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">CGU</a>
+      <a href="mailto:contact@aoscore.fr">contact@aoscore.fr</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
